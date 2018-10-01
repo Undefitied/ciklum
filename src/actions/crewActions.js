@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ACTIONS, FIELDS, URLS } from '../constants'
+import { ACTIONS, URLS } from '../constants'
 
 const fetchCrewStart = () => ({
   type: ACTIONS.FETCH_CREW_START,
@@ -21,9 +21,19 @@ export const fetchCrewList = () => dispatch => {
   axios.get(URLS.CREW_LIST)
     .then(response => response.data)
     .then(response =>
-      dispatch(fetchCrewSuccess(response[FIELDS.RESULTS]))
+      dispatch(fetchCrewSuccess(response.results))
     )
     .catch(error =>
       dispatch(fetchCrewFail(error.message))
     )
 }
+
+export const moveLeft = person => ({
+  type: ACTIONS.MOVE_LEFT,
+  person,
+})
+
+export const moveRight = person => ({
+  type: ACTIONS.MOVE_RIGHT,
+  person,
+})

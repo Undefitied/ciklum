@@ -6,7 +6,21 @@ const Block = styled.div`
   border-bottom: 1px solid #ccc;
 `
 
+const Column = styled.div`
+  display: flex;
+`
+
+const InfoBlock = styled.div`
+  padding: 0 20px;
+  flex-grow: 1;
+`
+
+const Image = styled.div`
+  width: 48px;
+`
+
 const Name = styled.h3`
+  margin-top: 0;
   text-transform: capitalize;
 `
 
@@ -15,20 +29,45 @@ const City = styled.span`
   text-transform: capitalize;
 `
 
-const CrewPerson = ({ person }) => {
+const Actions = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
 
+const CrewPerson = ({ person, moveLeft, moveRight }) => {
+  const name = `${person.name.title} ${person.name.first} ${person.name.last}`
 
   return (
     <Block>
-      <Name>
-        { `${person.name.title} ${person.name.first} ${person.name.last}` }
-      </Name>
-      <div>
-        City:
-        <City>
-          {person.location.city}
-        </City>
-      </div>
+      <Column>
+        <Image>
+
+          <img src={person.picture.thumbnail} alt={name} />
+          
+        </Image>
+        <InfoBlock>
+
+          <Name>
+            { name }
+          </Name>
+          <div>
+            City:
+            <City>
+              {person.location.city}
+            </City>
+          </div>
+            
+        </InfoBlock>
+
+        <Actions>
+          {
+            moveLeft && <button type="button" onClick={() => moveLeft(person)}>←</button>
+          }
+          {
+            moveRight && <button type="button" onClick={() => moveRight(person)}>→</button>
+          }
+        </Actions>
+      </Column>
     </Block>
   )
 }

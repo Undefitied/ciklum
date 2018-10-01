@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import styled from 'styled-components'
@@ -21,31 +21,24 @@ const Item = styled.div`
   display: flex;
 `
 
-class Filters extends Component {
-
-  render() {
-    const { onChange, filters } = this.props
-
-    return (
-      <Column>
-        {
-          Object.values(FILTERS).map(filterName => (
-            <Item key={filterName}>
-              <ItemName>
-                { FILTERS_LABELS[filterName] }
-              </ItemName>
-              <input
-                type="text"
-                onChange={e => onChange(e, filterName)}
-                value={filters[filterName]}
-              />
-            </Item>
-          ))
-        }
-      </Column>
-    )
-  }
-}
+const Filters = ({ onChange, filters }) => (
+  <Column>
+    {
+      Object.values(FILTERS).map(filterName => (
+        <Item key={filterName}>
+          <ItemName>
+            { FILTERS_LABELS[filterName] }
+          </ItemName>
+          <input
+            type="text"
+            onChange={e => onChange(e, filterName)}
+            value={filters[filterName]}
+          />
+        </Item>
+      ))
+    }
+  </Column>
+)
 
 const mapStateToProps = (
   {

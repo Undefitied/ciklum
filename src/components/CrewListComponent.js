@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import CrewPerson from './CrewPerson'
@@ -21,44 +21,78 @@ const Column = styled.div`
 const ColumnName = styled.h2`
 `
 
-const CrewListComponent = ({ crew }) => {
+class CrewListComponent extends Component {
 
-  return (
-    <Container>
-      <Filters />
+  reduceCrewState = (stateIds, extendProps) => {
+    const { crew } = this.props
 
-      <Row>
-        <Column>
-          <ColumnName>
-            Applied
-          </ColumnName>
+    return stateIds.reduce((result, personId) => {
+      const person = crew.byId[personId]
 
-          {
-            crew.map(person =>
-              <CrewPerson
-                key={person.id.value}
-                person={person}
-              />
-            )
-          }
-        </Column>
-        <Column>
-          <ColumnName>
-            Interviewing
-          </ColumnName>
+      if (person) {
+        result.push(
+          <CrewPerson
+            key={person.id.value}
+            person={person}
+            {...extendProps}
+          />
+        )
+      }
 
-          2
-        </Column>
-        <Column>
-          <ColumnName>
-            Hired
-          </ColumnName>
+      return result
+    }, [])
+  }
 
-          3
-        </Column>
-      </Row>
-    </Container>
-  )
+  render() {
+    const {
+      moveLeft,
+      moveRight,
+      appliedIds,
+      interviewingIds,
+      hiredIds,
+    } = this.props
+
+
+    const appliedCrew = this.reduceCrewState(appliedIds, { moveRight })
+    const interviewingCrew = this.reduceCrewState(interviewingIds, { moveLeft, moveRight })
+    const hiredCrew = this.reduceCrewState(hiredIds, { moveLeft })
+
+    return (
+      <Container>
+        <Filters />
+
+        <Row>
+          <Column>
+            <ColumnName>
+              Applied
+            </ColumnName>
+
+            {
+              appliedCrew
+            }
+          </Column>
+          <Column>
+            <ColumnName>
+              Interviewing
+            </ColumnName>
+
+            {
+              interviewingCrew
+            }
+          </Column>
+          <Column>
+            <ColumnName>
+              Hired
+            </ColumnName>
+
+            {
+              hiredCrew
+            }
+          </Column>
+        </Row>
+      </Container>
+    )
+  }
 }
 
 export default CrewListComponent

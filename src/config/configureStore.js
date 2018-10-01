@@ -24,7 +24,9 @@ const store = createStore(
 
 
 store.subscribe(throttle(() => {
-  saveState(store.getState())
+  saveState({
+    filters: store.getState().filters,
+  })
 }, 1000))
 
 window.addEventListener('storage', throttle(() => {

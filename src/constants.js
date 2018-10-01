@@ -7,14 +7,13 @@ export const ACTIONS = {
   SET_FILTER: 'SET_FILTER',
 
   SET_STORE: 'SET_STORE', //experimental
+
+  MOVE_LEFT: 'MOVE_LEFT',
+  MOVE_RIGHT: 'MOVE_RIGHT',
 }
 
 export const URLS = {
   CREW_LIST: 'https://randomuser.me/api/?nat=gb&results=5',
-}
-
-export const FIELDS = {
-  RESULTS: 'results',
 }
 
 export const FILTERS = {

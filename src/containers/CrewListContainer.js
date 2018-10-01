@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import CrewListComponent from '../components/CrewListComponent'
-import { fetchCrewList } from '../actions/crewActions'
+import { fetchCrewList, moveLeft, moveRight } from '../actions/crewActions'
 import { FILTERS } from '../constants';
+import { getNormalizedData } from '../utils';
 
 class CrewList extends Component {
 
@@ -24,7 +25,7 @@ class CrewList extends Component {
       },
     } = this.props
 
-    return crew.filter(person => {
+    const filteredCrew = Object.values(crew.byId).filter(person => {
       const filterByName = person.name.first.indexOf(nameValue) !== -1
         || person.name.first.indexOf(nameValue) !== -1
 
@@ -32,10 +33,26 @@ class CrewList extends Component {
 
       return filterByName && filterByCity
     })
+
+    return getNormalizedData(filteredCrew)
+  }
+
+  moveLeft = person => {
+    this.props.dispatch(moveLeft(person))
+  }
+
+  moveRight = person => {
+    this.props.dispatch(moveRight(person))
   }
 
   render() {
-    const { isLoading, errorId } = this.props
+    const {
+      isLoading,
+      errorId,
+      appliedIds,
+      interviewingIds,
+      hiredIds,
+    } = this.props
 
     if (isLoading) {
       return 'Loading...'
@@ -46,7 +63,14 @@ class CrewList extends Component {
     }
 
     return (
-      <CrewListComponent crew={this.getFilteredCrew()} />
+      <CrewListComponent
+        crew={this.getFilteredCrew()}
+        moveLeft={this.moveLeft}
+        moveRight={this.moveRight}
+        appliedIds={appliedIds}
+        interviewingIds={interviewingIds}
+        hiredIds={hiredIds}
+      />
     )
   }
 }
@@ -57,6 +81,9 @@ const mapStateToProps = (
       data: crew,
       isLoading,
       errorId,
+      appliedIds,
+      interviewingIds,
+      hiredIds,
     },
     filters,
   }
@@ -66,6 +93,9 @@ const mapStateToProps = (
     isLoading,
     errorId,
     filters,
+    appliedIds,
+    interviewingIds,
+    hiredIds,
   }
 }
 
