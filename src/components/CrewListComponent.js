@@ -23,7 +23,7 @@ const ColumnName = styled.h2`
 
 class CrewListComponent extends Component {
 
-  reduceCrewState = (stateIds, extendProps) => {
+  reduceByCrewState = (stateIds, extendProps) => {
     const { crew } = this.props
 
     return stateIds.reduce((result, personId) => {
@@ -53,9 +53,9 @@ class CrewListComponent extends Component {
     } = this.props
 
 
-    const appliedCrew = this.reduceCrewState(appliedIds, { moveRight })
-    const interviewingCrew = this.reduceCrewState(interviewingIds, { moveLeft, moveRight })
-    const hiredCrew = this.reduceCrewState(hiredIds, { moveLeft })
+    const appliedCrew = this.reduceByCrewState(appliedIds, { moveRight })
+    const interviewingCrew = this.reduceByCrewState(interviewingIds, { moveLeft, moveRight })
+    const hiredCrew = this.reduceByCrewState(hiredIds, { moveLeft })
 
     return (
       <Container>
