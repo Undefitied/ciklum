@@ -5,3 +5,8 @@ export const setFilter = (name, value) => ({
   name,
   value
 })
+
+export const setStore = store => ({
+  type: ACTIONS.SET_STORE,
+  store
+})

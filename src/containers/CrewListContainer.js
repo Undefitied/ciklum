@@ -8,7 +8,11 @@ import { FILTERS } from '../constants';
 class CrewList extends Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchCrewList())
+    const { crew, dispatch } = this.props
+
+    if (crew === null) {
+      dispatch(fetchCrewList())
+    }
   }
 
   getFilteredCrew = () => {

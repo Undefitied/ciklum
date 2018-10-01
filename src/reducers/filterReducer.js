@@ -16,6 +16,9 @@ const crew = (state = getInitialState(), action) => {
         [action.name]: action.value,
       }
 
+    case ACTIONS.SET_STORE:
+      return action.store
+
     default:
       return state
   }

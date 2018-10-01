@@ -5,6 +5,8 @@ export const ACTIONS = {
   FETCH_CREW_FAIL: 'FETCH_CREW_FAIL',
 
   SET_FILTER: 'SET_FILTER',
+
+  SET_STORE: 'SET_STORE', //experimental
 }
 
 export const URLS = {
