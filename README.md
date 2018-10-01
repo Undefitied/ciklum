@@ -1,4 +1,4 @@
-# Phone List App
+# Crew App
 
 ## Quick start
 0. Be sure you have node js and npm installed
