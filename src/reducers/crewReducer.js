@@ -1,5 +1,6 @@
 import { ACTIONS } from '../constants';
 import { getNormalizedData } from '../utils';
+import { getStateAfterMoveLeft, getStateAfterMoveRight } from '../utils/filters';
 
 const getInitialState = () => ({
   isLoading: true,
@@ -10,16 +11,8 @@ const getInitialState = () => ({
   hiredIds: [],
 })
 
-const filterById = (idList, idExclude, crew) =>
-  idList.filter(listedPersonId => {
-    const listedPerson = crew[listedPersonId]
-
-    return listedPerson.id.value !== idExclude
-  })
-
 const crew = (state = getInitialState(), action) => {
   let overwriteState
-  let personId
 
   switch (action.type) {
 
@@ -47,18 +40,7 @@ const crew = (state = getInitialState(), action) => {
       }
 
     case ACTIONS.MOVE_RIGHT:
-      overwriteState = {}
-      personId = action.person.id.value
-
-      if (state.appliedIds.indexOf(personId) !== -1) {
-        overwriteState.appliedIds = filterById(state.appliedIds, personId, state.data.byId)
-        overwriteState.interviewingIds = [ ...state.interviewingIds, personId ]
-
-      } else if (state.interviewingIds.indexOf(personId) !== -1) {
-        overwriteState.interviewingIds = filterById(state.interviewingIds, personId, state.data.byId)
-        overwriteState.hiredIds = [ ...state.hiredIds, personId ]
-
-      }
+			overwriteState = getStateAfterMoveRight(state, action.person.id.value)
 
       return {
         ...state,
@@ -66,18 +48,7 @@ const crew = (state = getInitialState(), action) => {
       }
 
     case ACTIONS.MOVE_LEFT:
-      overwriteState = {}
-      personId = action.person.id.value
-
-      if (state.hiredIds.indexOf(personId) !== -1) {
-        overwriteState.hiredIds = filterById(state.hiredIds, personId, state.data.byId)
-        overwriteState.interviewingIds = [ ...state.interviewingIds, personId ]
-
-      } else if (state.interviewingIds.indexOf(personId) !== -1) {
-        overwriteState.interviewingIds = filterById(state.interviewingIds, personId, state.data.byId)
-        overwriteState.appliedIds = [ ...state.appliedIds, personId ]
-
-      }
+			overwriteState = getStateAfterMoveLeft(state, action.person.id.value)
 
       return {
         ...state,

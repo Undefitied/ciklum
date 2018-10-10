@@ -1,4 +1,4 @@
-const getDataObjectFromArray = (data) => data.reduce((result, item) => {
+export const getDataObjectFromArray = (data) => data.reduce((result, item) => {
   result[item.id.value] = item
 
   return result

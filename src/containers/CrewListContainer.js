@@ -5,6 +5,7 @@ import CrewListComponent from '../components/CrewListComponent'
 import { fetchCrewList, moveLeft, moveRight } from '../actions/crewActions'
 import { FILTERS } from '../constants';
 import { getNormalizedData } from '../utils';
+import { getFilteredCrew } from '../utils/filters';
 
 class CrewList extends Component {
 
@@ -25,14 +26,7 @@ class CrewList extends Component {
       },
     } = this.props
 
-    const filteredCrew = Object.values(crew.byId).filter(person => {
-      const filterByName = person.name.first.indexOf(nameValue) !== -1
-        || person.name.first.indexOf(nameValue) !== -1
-
-      const filterByCity = person.location.city.indexOf(cityValue) !== -1
-
-      return filterByName && filterByCity
-    })
+		const filteredCrew = getFilteredCrew(crew.byId, nameValue, cityValue)
 
     return getNormalizedData(filteredCrew)
   }

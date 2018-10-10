@@ -1,13 +1,17 @@
 import { ACTIONS, FILTERS } from '../constants';
 
-const getInitialState = () => Object.values(FILTERS)
+export const getInitialState = (arrayOfNames) => arrayOfNames
   .reduce((result, filterName) => {
     result[filterName] = ''
 
     return result
   }, {})
 
-const crew = (state = getInitialState(), action) => {
+const initialState =  getInitialState(
+	Object.values(FILTERS)
+)
+
+const crew = (state = initialState, action) => {
   switch (action.type) {
 
     case ACTIONS.SET_FILTER:
